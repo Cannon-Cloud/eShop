@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "projects": {
+    "ngstore": {
+      "projectType": "application",
+      "root": "apps/ngstore",
+      "sourceRoot": "apps/ngstore/src",
+      "prefix": "cannon-cloud",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/ngstore",
+            "index": "apps/ngstore/src/index.html",
+            "main": "apps/ngstore/src/main.ts",
+            "polyfills": "apps/ngstore/src/polyfills.ts",
+            "tsConfig": "apps/ngstore/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/ngstore/src/favicon.ico",
+              "apps/ngstore/src/assets"
+            ],
+            "styles": ["apps/ngstore/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/ngstore/src/environments/environment.ts",
+                  "with": "apps/ngstore/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "ngstore:build:production"
+            },
+            "development": {
+              "browserTarget": "ngstore:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ngstore:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ngstore/src/**/*.ts",
+              "apps/ngstore/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/ngstore"],
+          "options": {
+            "jestConfig": "apps/ngstore/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ngstore-e2e": {
+      "root": "apps/ngstore-e2e",
+      "sourceRoot": "apps/ngstore-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ngstore-e2e/cypress.json",
+            "tsConfig": "apps/ngstore-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ngstore:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngstore:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/ngstore-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "ngstore"
+}
