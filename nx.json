@@ -27,12 +27,22 @@
     ]
   },
   "projects": {
+    "admin": {
+      "tags": []
+    },
+    "admin-e2e": {
+      "tags": [],
+      "implicitDependencies": ["admin"]
+    },
     "ngstore": {
       "tags": []
     },
     "ngstore-e2e": {
       "tags": [],
       "implicitDependencies": ["ngstore"]
+    },
+    "ui": {
+      "tags": []
     }
   }
 }

@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "eshop",
+            "prefix": "cannon-cloud",
             "style": "kebab-case"
           }
         ]
