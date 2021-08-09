@@ -41,7 +41,16 @@
       "tags": [],
       "implicitDependencies": ["ngstore"]
     },
+    "orders": {
+      "tags": []
+    },
+    "products": {
+      "tags": []
+    },
     "ui": {
+      "tags": []
+    },
+    "users": {
       "tags": []
     }
   }
