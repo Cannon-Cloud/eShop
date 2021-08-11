@@ -29,7 +29,7 @@ export class CategoriesListComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.categoriesService.deleteCategory(categoryId).subscribe(
-          (response) => {
+          () => {
             this._getCategories();
             this.messageService.add({
               severity: 'success',

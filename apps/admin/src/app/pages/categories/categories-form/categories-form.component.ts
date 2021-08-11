@@ -53,6 +53,10 @@ export class CategoriesFormComponent implements OnInit {
     }
   }
 
+  onCancel() {
+    this.location.back();
+  }
+
   private _checkEditMode() {
     this.router.params.subscribe((params) => {
       if (params.id) {
@@ -69,19 +73,19 @@ export class CategoriesFormComponent implements OnInit {
 
   private _addCategory(category: Category) {
     this.categoriesService.createCategory(category).subscribe(
-      (response) => {
+      (category: Category) => {
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
-          detail: 'Category Successfuly Added',
+          detail: `Category ${category.name} was created`,
         });
         timer(2000)
           .toPromise()
-          .then((done) => {
+          .then(() => {
             this.location.back();
           });
       },
-      (error) => {
+      () => {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -93,7 +97,7 @@ export class CategoriesFormComponent implements OnInit {
 
   private _updateCategory(category: Category) {
     this.categoriesService.updateCategory(category).subscribe(
-      (response) => {
+      () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -101,11 +105,11 @@ export class CategoriesFormComponent implements OnInit {
         });
         timer(2000)
           .toPromise()
-          .then((done) => {
+          .then(() => {
             this.location.back();
           });
       },
-      (error) => {
+      () => {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',

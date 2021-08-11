@@ -18,7 +18,8 @@
       "@cannon-cloud/orders": ["libs/orders/src/index.ts"],
       "@cannon-cloud/products": ["libs/products/src/index.ts"],
       "@cannon-cloud/ui": ["libs/ui/src/index.ts"],
-      "@cannon-cloud/users": ["libs/users/src/index.ts"]
+      "@cannon-cloud/users": ["libs/users/src/index.ts"],
+      "@env/*": ["environments/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]
