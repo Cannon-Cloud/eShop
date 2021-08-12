@@ -40,6 +40,7 @@
     "@angular/router": "^12.1.0",
     "@nrwl/angular": "12.6.5",
     "ajv": "^8.6.2",
+    "i18n-iso-countries": "^6.8.0",
     "normalize.css": "^8.0.1",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",

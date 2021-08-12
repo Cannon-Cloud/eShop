@@ -110,7 +110,7 @@
               <label for="description">Short Description</label>
               <textarea pInputTextarea formControlName="description"></textarea>
               <small
-                *ngIf="productForm.countInStock.invalid && isSubmitted"
+                *ngIf="productForm.description.invalid && isSubmitted"
                 class="p-error"
                 >Description is required</small
               >
