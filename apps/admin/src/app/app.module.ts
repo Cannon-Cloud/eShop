@@ -13,9 +13,12 @@ import { ShellComponent } from './shared/shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { CategoriesListComponent } from './pages/categories/categories-list/categories-list.component';
 import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
+import { ProductListComponent } from './pages/products/product-list/product-list.component';
+import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
 
 //Providers Import
 import { CategoriesService } from '@cannon-cloud/products';
+import { ProductsService } from '@cannon-cloud/products';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 //PrimeNG imports - UX
@@ -27,6 +30,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { DropdownModule } from 'primeng/dropdown';
+import { EditorModule } from 'primeng/editor';
 
 const UX_MODULE = [
   CardModule,
@@ -37,6 +45,11 @@ const UX_MODULE = [
   ToastModule,
   ConfirmDialogModule,
   ColorPickerModule,
+  InputNumberModule,
+  InputTextareaModule,
+  InputSwitchModule,
+  DropdownModule,
+  EditorModule,
 ];
 
 const routes: Routes = [
@@ -60,6 +73,18 @@ const routes: Routes = [
         path: 'categories/form/:id',
         component: CategoriesFormComponent,
       },
+      {
+        path: 'products',
+        component: ProductListComponent,
+      },
+      {
+        path: 'products/form',
+        component: ProductsFormComponent,
+      },
+      {
+        path: 'products/form/:id',
+        component: ProductsFormComponent,
+      },
     ],
   },
 ];
@@ -72,6 +97,8 @@ const routes: Routes = [
     SidebarComponent,
     CategoriesListComponent,
     CategoriesFormComponent,
+    ProductListComponent,
+    ProductsFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +109,12 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
     ...UX_MODULE,
   ],
-  providers: [CategoriesService, MessageService, ConfirmationService],
+  providers: [
+    CategoriesService,
+    ProductsService,
+    MessageService,
+    ConfirmationService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
