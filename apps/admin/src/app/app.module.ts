@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { ProductListComponent } from './pages/products/product-list/product-list
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
 import { UsersFormComponent } from './pages/users/users-form/users-form.component';
 import { UsersListComponent } from './pages/users/users-list/users-list.component';
+import { AuthGuard, JwtInterceptor, UsersModule } from '@cannon-cloud/users';
 
 //Providers Import
 import { CategoriesService } from '@cannon-cloud/products';
@@ -66,6 +67,7 @@ const routes: Routes = [
   {
     path: '',
     component: ShellComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',
@@ -141,6 +143,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
+    UsersModule,
     ...UX_MODULE,
   ],
   providers: [
@@ -148,6 +151,7 @@ const routes: Routes = [
     ProductsService,
     MessageService,
     ConfirmationService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
