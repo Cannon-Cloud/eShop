@@ -47,6 +47,10 @@ export class UsersService {
     });
   }
 
+  getUserCount(): any {
+    return this.http.get(`${this.apiURLUsers}/get/count`);
+  }
+
   getCountry(countryKey: string): string {
     return CountriesLib.getName(countryKey, 'en');
   }
