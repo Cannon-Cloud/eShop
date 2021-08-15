@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Order, OrdersService } from '@cannon-cloud/orders';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ORDER_STATUS } from '../order.constants';
 
 @Component({
@@ -9,9 +11,11 @@ import { ORDER_STATUS } from '../order.constants';
   templateUrl: './orders-list.component.html',
   styles: [],
 })
-export class OrdersListComponent implements OnInit {
+export class OrdersListComponent implements OnInit, OnDestroy {
   orders: Order[] = [];
   orderStatus = ORDER_STATUS;
+  endSubs$: Subject<any> = new Subject();
+
   constructor(
     private ordersService: OrdersService,
     private confirmationService: ConfirmationService,
@@ -21,6 +25,11 @@ export class OrdersListComponent implements OnInit {
 
   ngOnInit(): void {
     this._getOrders();
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.next();
+    this.endSubs$.complete();
   }
 
   deleteOrder(orderId: string) {
@@ -55,8 +64,11 @@ export class OrdersListComponent implements OnInit {
   }
 
   private _getOrders() {
-    this.ordersService.getOrders().subscribe((orders) => {
-      this.orders = orders;
-    });
+    this.ordersService
+      .getOrders()
+      .pipe(takeUntil(this.endSubs$))
+      .subscribe((orders) => {
+        this.orders = orders;
+      });
   }
 }

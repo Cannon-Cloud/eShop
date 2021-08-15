@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductsService, Product } from '@cannon-cloud/products';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'admin-product-list',
   templateUrl: './product-list.component.html',
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
+  endSubs$: Subject<any> = new Subject();
   constructor(
     private productsService: ProductsService,
     private confirmationService: ConfirmationService,
@@ -18,6 +21,11 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this._getProdcuts();
+  }
+
+  ngOnDestroy() {
+    this.endSubs$.next();
+    this.endSubs$.complete();
   }
 
   deleteProduct(productId: string) {
@@ -52,8 +60,11 @@ export class ProductListComponent implements OnInit {
   }
 
   private _getProdcuts() {
-    this.productsService.getProducts().subscribe((prod) => {
-      this.products = prod;
-    });
+    this.productsService
+      .getProducts()
+      .pipe(takeUntil(this.endSubs$))
+      .subscribe((prod) => {
+        this.products = prod;
+      });
   }
 }
